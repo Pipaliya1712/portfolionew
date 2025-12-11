@@ -218,8 +218,8 @@ export default function Portfolio() {
     <>
 <Head>
   <title>Parth Pipaliya - Full Stack Gen AI Developer | AI Engineer Portfolio India</title>
-  <meta name="description" content="Parth Pipaliya (parthpipaliya.in) - Full Stack Gen AI Developer from Ahmedabad, India. Specializing in RAG systems, LLMs, and AI integration with 1 years experience." />
-  <meta name="keywords" content="Parth Pipaliya, ParthPipaliya, Pipaliya Parth, parthpipaliya.in, Gen AI Developer India, Full Stack Developer Ahmedabad, AI Engineer Gujarat" />
+  <meta name="description" content="Parth Pipaliya (parthpipaliya.com) - Full Stack Gen AI Developer from Ahmedabad, India. Specializing in RAG systems, LLMs, and AI integration with 1 years experience." />
+  <meta name="keywords" content="Parth Pipaliya, ParthPipaliya, Pipaliya Parth, parthpipaliya.com, Gen AI Developer India, Full Stack Developer Ahmedabad, AI Engineer Gujarat" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -227,7 +227,7 @@ export default function Portfolio() {
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
   {/* Canonical URL */}
-  <link rel="canonical" href="https://parthpipaliya.in" />
+  <link rel="canonical" href="https://parthpipaliya.com" />
   
   {/* Open Graph */}
   <meta property="og:title" content="Parth Pipaliya - Full Stack Gen AI Developer India" />
@@ -243,7 +243,7 @@ export default function Portfolio() {
       "@type": "Person",
       "name": "Parth Pipaliya",
       "alternateName": ["ParthPipaliya", "Pipaliya Parth"],
-      "url": "https://parthpipaliya.in",
+      "url": "https://parthpipaliya.com",
       "jobTitle": "Full Stack Gen AI Developer",
       "nationality": "Indian",
       "worksFor": {

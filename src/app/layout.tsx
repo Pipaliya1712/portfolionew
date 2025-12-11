@@ -11,8 +11,8 @@ const varelaRound = Varela_Round({
 
 export const metadata: Metadata = {
   title: "Parth Pipaliya - Full Stack Gen AI Developer | AI Engineer Portfolio India",
-  description: "Parth Pipaliya (parthpipaliya.in) - Full Stack Gen AI Developer from Ahmedabad, India. Specializing in RAG systems, LLMs, and AI integration with 2.5+ years experience building 10+ AI applications.",
-  keywords: "Parth Pipaliya, ParthPipaliya, Pipaliya Parth, parthpipaliya.in, Gen AI Developer India, Full Stack Developer Ahmedabad, AI Engineer Gujarat, RAG Systems, LLM Integration",
+  description: "Parth Pipaliya (parthpipaliya.com) - Full Stack Gen AI Developer from Ahmedabad, India. Specializing in RAG systems, LLMs, and AI integration with 2.5+ years experience building 10+ AI applications.",
+  keywords: "Parth Pipaliya, ParthPipaliya, Pipaliya Parth, parthpipaliya.com, Gen AI Developer India, Full Stack Developer Ahmedabad, AI Engineer Gujarat, RAG Systems, LLM Integration",
   authors: [{ name: "Parth Pipaliya" }],
   creator: "Parth Pipaliya",
   publisher: "Parth Pipaliya",
@@ -22,13 +22,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://parthpipaliya.in",
+    url: "https://parthpipaliya.com",
     title: "Parth Pipaliya - Full Stack Gen AI Developer India",
-    description: "Portfolio of Parth Pipaliya (parthpipaliya.in) - Gen AI specialist from Ahmedabad, India building cutting-edge AI solutions",
+    description: "Portfolio of Parth Pipaliya (parthpipaliya.com) - Gen AI specialist from Ahmedabad, India building cutting-edge AI solutions",
     siteName: "Parth Pipaliya Portfolio",
     images: [
       {
-        url: "https://parthpipaliya.in/profile.PNG",
+        url: "https://parthpipaliya.com/profile.PNG",
         width: 1200,
         height: 630,
         alt: "Parth Pipaliya - Full Stack Gen AI Developer from Ahmedabad, India",
@@ -41,14 +41,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Parth Pipaliya - Full Stack Gen AI Developer",
     description: "Portfolio of Parth Pipaliya, Gen AI specialist and full-stack developer from India",
-    images: ["https://parthpipaliya.in/profile.PNG"],
+    images: ["https://parthpipaliya.com/profile.PNG"],
     creator: "@ParthPipaliya",
   },
   
   // Additional Meta
-  metadataBase: new URL("https://parthpipaliya.in"),
+  metadataBase: new URL("https://parthpipaliya.com"),
   alternates: {
-    canonical: "https://parthpipaliya.in",
+    canonical: "https://parthpipaliya.com",
   },
   
   // Geo Location
@@ -95,8 +95,8 @@ export default function RootLayout({
               "@type": "Person",
               "name": "Parth Pipaliya",
               "alternateName": ["ParthPipaliya", "Pipaliya Parth"],
-              "url": "https://parthpipaliya.in",
-              "image": "https://parthpipaliya.in/profile.PNG",
+              "url": "https://parthpipaliya.com",
+              "image": "https://parthpipaliya.com/profile.PNG",
               "jobTitle": "Full Stack Gen AI Developer",
               "nationality": "Indian",
               "worksFor": {
@@ -117,7 +117,7 @@ export default function RootLayout({
               "sameAs": [
                 "https://www.linkedin.com/in/parthpipaliya/",
                 "https://github.com/Pipaliya1712",
-                "https://parthpipaliya.in"
+                "https://parthpipaliya.com"
               ],
               "knowsAbout": [
                 "Artificial Intelligence",

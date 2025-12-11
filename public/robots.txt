@@ -3,7 +3,7 @@ Allow: /
 Disallow: /admin/
 Disallow: /private/
 
-Sitemap: https://parthpipaliya.in/sitemap.xml
+Sitemap: https://parthpipaliya.com/sitemap.xml
 
 # For better crawling
 Crawl-delay: 1

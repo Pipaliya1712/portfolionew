@@ -13,19 +13,19 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
+    console.log('Received contact form data:', process.env.EMAIL_USER);
     // Create transporter
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER, // Your Gmail address
-        pass: process.env.EMAIL_PASSWORD, // Your Gmail App Password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
       },
     });
 
     // Email options
     const mailOptions = {
-      from: `"${name}" <${process.env.EMAIL_USER}>`,
+      from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER, // Your email to receive messages
       replyTo: email, // User's email for easy reply
       subject: `Portfolio Contact: ${subject}`,
@@ -102,11 +102,105 @@ export async function POST(request: NextRequest) {
         </html>
       `,
     };
+    const mailOptionstoUser = {
+      from: process.env.EMAIL_USER,
+      to: email, 
+      subject: `Thank You for Reaching Out – ${name}`,
+      html: `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f7;
+                padding: 20px;
+                color: #333;
+              }
+              .container {
+                max-width: 650px;
+                margin: auto;
+                background: #ffffff;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+              }
+              .header {
+                background: #4F46E5;
+                color: #ffffff;
+                padding: 25px;
+                text-align: center;
+              }
+              .content {
+                padding: 30px;
+                line-height: 1.7;
+              }
+              .user-message-box {
+                background: #f5f5f5;
+                border-left: 4px solid #4F46E5;
+                padding: 15px;
+                margin: 20px 0;
+                white-space: pre-line;
+              }
+              .footer {
+                background: #f9f9f9;
+                padding: 25px;
+                font-size: 14px;
+                color: #444;
+                border-top: 1px solid #eee;
+              }
+              .footer a {
+                color: #4F46E5;
+                text-decoration: none;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+
+              <div class="header">
+                <h2>Thank You for Contacting Me</h2>
+              </div>
+
+              <div class="content">
+                <p>Hi <strong>${name}</strong>,</p>
+
+                <p>Thank you for reaching out through my portfolio contact form. I truly appreciate you taking the time to connect.</p>
+
+                <p>I have received your message and will get back to you very soon.  
+                Your details have been successfully recorded, and I will review them shortly.</p>
+
+                <h3>Your Message:</h3>
+                <div class="user-message-box">
+                  ${message.replace(/\n/g, "<br/>")}
+                </div>
+
+                <p>If your request is urgent, feel free to contact me directly using the information below.</p>
+              </div>
+
+              <div class="footer">
+                <p><strong>Best Regards,</strong><br/>
+                <strong>Parth Pipaliya</strong></p>
+
+                <p>
+                  📞 <strong>Contact:</strong> <a href="tel:+917383274687">+91 73832 74687</a><br/>
+                  📧 <strong>Email:</strong> <a href="mailto:parthpipaliya1712@gmail.com">parthpipaliya1712@gmail.com</a><br/>
+                  🔗 <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/parthpipaliya/" target="_blank">linkedin.com/in/parthpipaliya</a><br/>
+                  🌐 <strong>Website:</strong> <a href="https://parthpipaliya.com" target="_blank">parthpipaliya.com</a>
+                </p>
+              </div>
+
+            </div>
+          </body>
+        </html>
+      `,
+    };
 
     // Send email
     const info = await transporter.sendMail(mailOptions);
+    const infoToUser = await transporter.sendMail(mailOptionstoUser);
     
-    console.log('Email sent successfully:', info.messageId);
+    console.log('Email sent successfully:', info.messageId, infoToUser.messageId);
 
     return NextResponse.json(
       { success: true, messageId: info.messageId },
