@@ -1,5 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Varela+Round&display=swap');
 
+/* ============================================
+   CSS CUSTOM PROPERTIES - DESIGN TOKENS
+   ============================================ */
+:root {
+  /* Primary Colors - Vibrant HSL Palette */
+  --color-primary: hsl(250, 84%, 60%);
+  --color-primary-light: hsl(250, 84%, 70%);
+  --color-primary-dark: hsl(250, 84%, 50%);
+
+  --color-secondary: hsl(280, 80%, 65%);
+  --color-accent: hsl(320, 85%, 60%);
+  --color-success: hsl(150, 70%, 55%);
+  --color-warning: hsl(40, 95%, 60%);
+  --color-error: hsl(0, 85%, 60%);
+
+  /* Neutral Colors - Much Lighter Theme */
+  --color-bg-primary: hsl(0, 0%, 15%);
+  --color-bg-secondary: hsl(0, 0%, 20%);
+  --color-bg-tertiary: hsl(0, 0%, 25%);
+
+  --color-text-primary: hsl(0, 0%, 100%);
+  --color-text-secondary: hsl(0, 0%, 85%);
+  --color-text-tertiary: hsl(0, 0%, 70%);
+
+  /* Gradient Definitions */
+  --gradient-primary: linear-gradient(135deg, hsl(250, 84%, 60%) 0%, hsl(280, 80%, 65%) 100%);
+  --gradient-secondary: linear-gradient(135deg, hsl(320, 85%, 60%) 0%, hsl(250, 84%, 60%) 100%);
+  --gradient-accent: linear-gradient(135deg, hsl(280, 80%, 65%) 0%, hsl(320, 85%, 60%) 100%);
+  --gradient-rainbow: linear-gradient(135deg, hsl(250, 84%, 60%) 0%, hsl(280, 80%, 65%) 33%, hsl(320, 85%, 60%) 66%, hsl(40, 95%, 60%) 100%);
+
+  /* Glassmorphism - Much More Visible */
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+  /* Shadows & Glows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.4);
+
+  --glow-primary: 0 0 20px hsla(250, 84%, 60%, 0.5);
+  --glow-secondary: 0 0 20px hsla(280, 80%, 65%, 0.5);
+  --glow-accent: 0 0 20px hsla(320, 85%, 60%, 0.5);
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+
+  /* Border Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-full: 9999px;
+
+  /* Transitions - Smoother with cubic-bezier */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Z-index */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal: 400;
+  --z-popover: 500;
+  --z-tooltip: 600;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
 * {
   margin: 0;
   padding: 0;
@@ -12,71 +90,336 @@ html {
 }
 
 body {
-  font-family: 'Varela Round', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background-color: #000000;
-  color: #ffffff;
-  line-height: 1.5;
+  font-family: 'Varela Round', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   word-wrap: break-word;
   -webkit-text-size-adjust: 100%;
+  position: relative;
 }
 
-/* Custom scrollbar */
+/* Animated Background - Much Lighter */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 20% 50%, hsla(250, 84%, 60%, 0.18) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, hsla(280, 80%, 65%, 0.18) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, hsla(320, 85%, 60%, 0.15) 0%, transparent 50%);
+  z-index: -1;
+  animation: backgroundShift 20s ease infinite;
+}
+
+@keyframes backgroundShift {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #111111;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-sm);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333333;
-  border-radius: 4px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-sm);
+  transition: var(--transition-base);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555555;
+  background: var(--gradient-secondary);
+  box-shadow: var(--glow-primary);
 }
 
-/* Selection color */
+/* ============================================
+   SELECTION STYLES
+   ============================================ */
 ::selection {
-  background-color: #ffffff;
-  color: #000000;
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
 }
 
 ::-moz-selection {
-  background-color: #ffffff;
-  color: #000000;
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
 }
 
-/* Focus styles */
+/* ============================================
+   FOCUS STYLES
+   ============================================ */
 button:focus,
 input:focus,
 textarea:focus,
 a:focus {
-  outline: 2px solid #ffffff;
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: var(--glow-primary);
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-/* Smooth transitions for all interactive elements */
-a, button, input, textarea {
-  transition: all 0.2s ease;
+/* ============================================
+   SMOOTH TRANSITIONS
+   ============================================ */
+a,
+button,
+input,
+textarea {
+  transition: all var(--transition-base);
 }
 
-/* Reduce motion for accessibility */
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Glassmorphism */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-secondary {
+  background: var(--gradient-secondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient Borders */
+.gradient-border {
+  position: relative;
+  border-radius: var(--radius-md);
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: var(--gradient-primary);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ============================================
+   ANIMATION KEYFRAMES
+   ============================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px var(--color-primary), 0 0 10px var(--color-primary);
+  }
+
+  50% {
+    box-shadow: 0 0 10px var(--color-primary), 0 0 20px var(--color-primary), 0 0 30px var(--color-primary);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY - REDUCED MOTION
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  
+
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  body::before {
+    animation: none !important;
   }
 }
