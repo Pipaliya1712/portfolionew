@@ -216,7 +216,7 @@ export default function ContactSection() {
                 <span>GitHub</span>
               </motion.a>
               <motion.a
-                href="https://drive.google.com/file/d/1P16JI0xOmyw0MuBtzRhpW0mLvQxUPF4a/view?usp=sharing"
+                href="https://drive.google.com/file/d/1u5F1zOcER5IjbO106WBArSnhu-872bn3/view?usp=sharing"
                 target='_blank'
                 className={styles.socialLink}
                 variants={itemVariants}
