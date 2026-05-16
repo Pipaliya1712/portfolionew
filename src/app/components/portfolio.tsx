@@ -1,6 +1,4 @@
-// components/Portfolio.js
 "use client";
-import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -9,7 +7,9 @@ import styles from "../styles/Portfolio.module.css";
 import AboutSection from "./aboutsection";
 import ServicesSection from "./servicessection";
 import SkillsSection from "./skillssection";
+import ProjectsSection from "./projectssection";
 import ContactSection from "./contactsection";
+import ChatbotWidget from "./chatbotwidget";
 
 const TypewriterWord = ({ words, speed = 150, delay = 2000 }: { words: string[]; speed?: number; delay?: number }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -17,17 +17,6 @@ const TypewriterWord = ({ words, speed = 150, delay = 2000 }: { words: string[];
   const [isDeleting, setIsDeleting] = useState(false);
   const [charIndex, setCharIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   useEffect(() => {
     const currentWord = words[currentWordIndex];
@@ -59,16 +48,17 @@ const TypewriterWord = ({ words, speed = 150, delay = 2000 }: { words: string[];
   }, [charIndex, currentWordIndex, isDeleting, isPaused, words, speed, delay]);
 
   return (
-    <span style={{ 
-      display: 'inline-block', 
-      minWidth: isMobile ? '150px' : '250px', 
+    <span style={{
+      display: 'inline-block',
+      minWidth: '200px',
       textAlign: 'left',
       verticalAlign: 'top',
       whiteSpace: 'nowrap',
-      paddingBottom: '0.1em'
+      paddingBottom: '0.1em',
+      color: '#d0bcff'
     }}>
       {displayText}
-      <span style={{ 
+      <span style={{
         animation: 'blink 1s infinite',
         color: '#ffffff',
         fontWeight: '300'
@@ -82,17 +72,16 @@ export default function Portfolio() {
 
   useEffect(() => {
     setIsLoaded(true);
-    
-    // Fix for iOS viewport height issues
+
     const setVH = () => {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     };
-    
+
     setVH();
     window.addEventListener('resize', setVH);
     window.addEventListener('orientationchange', setVH);
-    
+
     return () => {
       window.removeEventListener('resize', setVH);
       window.removeEventListener('orientationchange', setVH);
@@ -112,22 +101,20 @@ export default function Portfolio() {
     };
 
     const updateActiveNav = () => {
-      const sections = ['home', 'about', 'services', 'skills', 'contact'];
+      const sections = ['home', 'about', 'services', 'skills', 'projects', 'contact'];
       const scrollPosition = window.scrollY + 100;
-      
+
       let currentSection = 'home';
-      
-      // Check if we're at the very top
+
       if (window.scrollY < 50) {
         currentSection = 'home';
       } else {
-        // Find the current section based on scroll position
         for (let i = 0; i < sections.length; i++) {
           const element = document.getElementById(sections[i]);
           if (element) {
-            const elementTop = element.offsetTop - 150; // Add offset for better detection
+            const elementTop = element.offsetTop - 150;
             const elementBottom = elementTop + element.offsetHeight;
-            
+
             if (scrollPosition >= elementTop && scrollPosition < elementBottom) {
               currentSection = sections[i];
               break;
@@ -135,13 +122,11 @@ export default function Portfolio() {
           }
         }
       }
-      
-      // Update active nav - Remove all active classes first
+
       document.querySelectorAll(`.${styles.navLink}`).forEach((link) => {
         link.classList.remove(styles.active);
       });
-      
-      // Then add active class to current section
+
       const activeLink = document.querySelector(`a[href="#${currentSection}"]`);
       if (activeLink) {
         activeLink.classList.add(styles.active);
@@ -153,9 +138,8 @@ export default function Portfolio() {
       link.addEventListener("click", handleNavClick);
     });
 
-    // Add scroll listener for active nav updates
     window.addEventListener('scroll', updateActiveNav);
-    updateActiveNav(); // Set initial state
+    updateActiveNav();
 
     return () => {
       navLinks.forEach((link) => {
@@ -165,15 +149,12 @@ export default function Portfolio() {
     };
   }, []);
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
+  const navVariants = {
+    hidden: { y: -50, opacity: 0 },
     visible: {
+      y: 0,
       opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-      },
+      transition: { duration: 0.6, ease: "easeOut" as const },
     },
   };
 
@@ -182,10 +163,7 @@ export default function Portfolio() {
     visible: {
       x: 0,
       opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut" as const,
-      },
+      transition: { duration: 0.8, ease: "easeOut" as const },
     },
   };
 
@@ -194,105 +172,27 @@ export default function Portfolio() {
     visible: {
       scale: 1,
       opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut" as const,
-        delay: 0.5,
-      },
-    },
-  };
-
-  const navVariants = {
-    hidden: { y: -50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut" as const,
-      },
+      transition: { duration: 0.8, ease: "easeOut" as const, delay: 0.5 },
     },
   };
 
   return (
-    <>
-<Head>
-  <title>Parth Pipaliya - Full Stack Gen AI Developer | AI Engineer Portfolio India</title>
-  <meta name="description" content="Parth Pipaliya (parthpipaliya.com) - Full Stack Gen AI Developer from Ahmedabad, India. Specializing in RAG systems, LLMs, and AI integration with 1 years experience." />
-  <meta name="keywords" content="Parth Pipaliya, ParthPipaliya, Pipaliya Parth, parthpipaliya.com, Gen AI Developer India, Full Stack Developer Ahmedabad, AI Engineer Gujarat" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
-  {/* Canonical URL */}
-  <link rel="canonical" href="https://parthpipaliya.com" />
-  
-  {/* Open Graph */}
-  <meta property="og:title" content="Parth Pipaliya - Full Stack Gen AI Developer India" />
-  <meta property="og:description" content="Portfolio of Parth Pipalitya (parthpiplaiya.in) - Gen AI specialist from Ahmedabad, India" />
-  <meta property="og:url" content="https://parthpiplaiya.in" />
-  <meta property="og:image" content="https://parthpiplaiya.in/profile.png" />
-  <meta property="og:site_name" content="Parth Pipaliya Portfolio" />
-  
-  {/* Enhanced Schema.org for .in domain */}
-  <script type="application/ld+json">
-    {JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Parth Pipaliya",
-      "alternateName": ["ParthPipaliya", "Pipaliya Parth"],
-      "url": "https://parthpipaliya.com",
-      "jobTitle": "Full Stack Gen AI Developer",
-      "nationality": "Indian",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Silvertouch Technologies",
-        "address": {
-          "@type": "PostalAddress",
-          "addressCountry": "India"
-        }
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Ahmedabad",
-        "addressRegion": "Gujarat", 
-        "addressCountry": "India"
-      },
-      "sameAs": [
-        "https://www.linkedin.com/in/parthpipaliya/",
-        "https://github.com/Pipaliya1712"
-      ],
-      "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Full Stack Development", "RAG Systems"],
-      "alumniOf": "Gujarat, India",
-      "email": "parthpipaliya1712@gmail.com",
-      "telephone": "+91-7383274687"
-    })}
-  </script>
-</Head>
-
-      <motion.div 
-        className={styles.container}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isLoaded ? 1 : 0 }}
-        transition={{ duration: 0.6 }}
+    <motion.div
+      className={styles.container}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isLoaded ? 1 : 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      {/* Navigation Header */}
+      <motion.header
+        className={styles.header}
+        variants={navVariants}
+        initial="hidden"
+        animate="visible"
       >
-        <motion.header
-          className={styles.header}
-          variants={navVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <nav className={styles.nav}>
-            <motion.a
-              href="#home"
-              className={styles.navLink}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Home
-            </motion.a>
+        <nav className={styles.nav}>
+          <a href="#home" className={styles.logo}>Parth Pipaliya</a>
+          <div className={styles.navLinks}>
             <motion.a
               href="#about"
               className={styles.navLink}
@@ -310,6 +210,14 @@ export default function Portfolio() {
               Services
             </motion.a>
             <motion.a
+              href="#projects"
+              className={styles.navLink}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Projects
+            </motion.a>
+            <motion.a
               href="#skills"
               className={styles.navLink}
               whileHover={{ scale: 1.05 }}
@@ -317,99 +225,137 @@ export default function Portfolio() {
             >
               Skills
             </motion.a>
-            <motion.a
-              href="#contact"
-              className={styles.navLink}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Contact
-            </motion.a>
-          </nav>
-        </motion.header>
-
-        <main className={styles.mainContent} id="home">
-          <motion.div
-            className={styles.heroSection}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
+          </div>
+          <motion.a
+            href="#contact"
+            className={styles.connectBtn}
+            whileHover={{ scale: 0.97 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <motion.div
-              className={styles.textContent}
-              variants={heroTextVariants}
-            >
-              <motion.h1
-                className={styles.heroTitle}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.3 }}
+            Connect
+          </motion.a>
+        </nav>
+      </motion.header>
+
+      {/* Hero Section */}
+      <div className={styles.mainContent} id="home">
+        <motion.div
+          className={styles.heroSection}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div className={styles.heroLeft} variants={heroTextVariants}>
+            <div className={styles.availabilityBadge}>
+              <span className={styles.badgeDot}></span>
+              <span className={styles.badgeText}>Available for Strategic AI Projects</span>
+            </div>
+            <h1 className={styles.heroTitle}>
+              Building AI Systems That <span className={styles.highlight}>Actually</span> Solve Business Problems
+            </h1>
+            <p className={styles.heroDescription}>
+              Expert in Enterprise RAG, Autonomous AI Agents, and scalable automation.
+              Transforming complex workflows into intelligent, high-performance production systems.
+            </p>
+            <div className={styles.heroButtons}>
+              <motion.a
+                href="#contact"
+                className={styles.primaryBtn}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Hi, I&apos;m Parth,
-                <br />
-                a <TypewriterWord words={["Full Stack Dev", "Gen AI Expert", "Python Developer", "AI Engineer"]} />
-              </motion.h1>
-            </motion.div>
-            <motion.div
-              className={styles.profileImageWrapper}
-              variants={profileImageVariants}
-              whileHover={{
-                scale: 1.05,
-                rotate: 2,
-                transition: { duration: 0.3 },
-              }}
-            >
-              <Image
-                src="/profile.png"
-                alt="Parth"
-                width={300}
-                height={300}
-                className={styles.profileImage}
-                priority
-              />
-            </motion.div>
+                Book a Call
+                <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>arrow_forward</span>
+              </motion.a>
+              <motion.a
+                href="#projects"
+                className={styles.secondaryBtn}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                View Case Studies
+              </motion.a>
+            </div>
           </motion.div>
-        </main>
+          <motion.div className={styles.heroRight} variants={profileImageVariants}>
+            <div className={styles.profileImageWrapper}>
+              <div className={styles.profileImageContainer}>
+                <Image
+                  src="/profile.png"
+                  alt="Parth Pipaliya"
+                  fill
+                  className={styles.profileImage}
+                  priority
+                  sizes="(max-width: 768px) 350px, 500px"
+                />
+                <div className={styles.imageOverlay}>
+                  <div className={styles.overlayStatus}>
+                    <span className={styles.overlayLabel}>STATUS: PROCESSING</span>
+                    <span className={styles.overlayTitle}>RAG Engine V2.0</span>
+                  </div>
+                  <div className={styles.overlayAvatars}>
+                    <div className={styles.avatar}>AI</div>
+                    <div className={styles.avatar}>NLP</div>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.floatingIcon}>
+                <span className="material-symbols-outlined">neurology</span>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
 
-        {/* FIXED: Ensure sections are visible with proper spacing */}
-        <div className={styles.sectionsContainer}>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, amount: 0.1 }}
-          >
-            <AboutSection />
-          </motion.div>
+      {/* Content Sections */}
+      <div className={styles.sectionsContainer}>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <AboutSection />
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, amount: 0.1 }}
-          >
-            <ServicesSection />
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <ServicesSection />
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, amount: 0.1 }}
-          >
-            <SkillsSection />
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <ProjectsSection />
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, amount: 0.1 }}
-          >
-            <ContactSection />
-          </motion.div>
-        </div>
-      </motion.div>
-    </>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <SkillsSection />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <ContactSection />
+        </motion.div>
+      </div>
+
+      {/* Chatbot Widget */}
+      <ChatbotWidget />
+    </motion.div>
   );
 }

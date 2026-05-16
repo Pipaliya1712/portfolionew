@@ -98,15 +98,19 @@ export default function ServicesSection() {
   return (
     <section className={styles.servicesSection} id="services">
       <div className={styles.container}>
-        <motion.h2 
+        <span className={styles.sectionLabel}>Capabilities</span>
+        <motion.h2
           className={styles.sectionTitle}
           variants={titleVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          Services I Offer
+          Tailored AI Engineering
         </motion.h2>
+        <p className={styles.sectionSubtitle}>
+          I don&apos;t just build chatbots; I build intelligent infrastructure that evolves with your business.
+        </p>
         
         <motion.div 
           className={styles.servicesGrid}

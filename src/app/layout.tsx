@@ -1,13 +1,6 @@
 import type { Metadata } from "next";
-import { Varela_Round } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
-
-const varelaRound = Varela_Round({
-  subsets: ["latin"],
-  display: "swap",
-  weight: "400",
-});
 
 export const metadata: Metadata = {
   title: "Parth Pipaliya - Full Stack Gen AI Developer | AI Engineer Portfolio India",
@@ -17,8 +10,7 @@ export const metadata: Metadata = {
   creator: "Parth Pipaliya",
   publisher: "Parth Pipaliya",
   robots: "index, follow",
-  
-  // Open Graph / Facebook
+
   openGraph: {
     type: "website",
     locale: "en_IN",
@@ -35,8 +27,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-  
-  // Twitter
+
   twitter: {
     card: "summary_large_image",
     title: "Parth Pipaliya - Full Stack Gen AI Developer",
@@ -44,22 +35,19 @@ export const metadata: Metadata = {
     images: ["https://parthpipaliya.com/profile.PNG"],
     creator: "@ParthPipaliya",
   },
-  
-  // Additional Meta
+
   metadataBase: new URL("https://parthpipaliya.com"),
   alternates: {
     canonical: "https://parthpipaliya.com",
   },
-  
-  // Geo Location
+
   other: {
     "geo.region": "IN-GJ",
     "geo.placename": "Ahmedabad, Gujarat, India",
     "geo.position": "23.0225;72.5714",
     "ICBM": "23.0225, 72.5714",
   },
-  
-  // Icons
+
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "32x32" },
@@ -73,8 +61,7 @@ export const metadata: Metadata = {
       { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
     ],
   },
-  
-  // Manifest
+
   manifest: "/manifest.json",
 };
 
@@ -86,7 +73,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Structured Data - JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -140,29 +126,24 @@ export default function RootLayout({
             })
           }}
         />
-        
-        {/* Google Analytics (add your GA4 tracking ID) */}
-        {/* <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-        <script dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'GA_MEASUREMENT_ID');
-          `
-        }} /> */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Geist:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
       <body
-        className={`${varelaRound.className} antialiased`}
+        className="antialiased"
         style={{
-          backgroundColor: '#000000',
-          color: '#ffffff',
           margin: 0,
           padding: 0,
           minHeight: '100vh'
         }}
       >
         <Analytics />
+        {/* Animated background orbs */}
+        <div className="glow-orb glow-orb-top" aria-hidden="true" />
+        <div className="glow-orb glow-orb-bottom" aria-hidden="true" />
+        <div className="glow-orb glow-orb-mid" aria-hidden="true" />
         {children}
       </body>
     </html>

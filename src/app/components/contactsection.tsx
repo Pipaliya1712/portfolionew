@@ -127,16 +127,17 @@ export default function ContactSection() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true, amount: 0.3 }}
         >
-          Let&apos;s Work Together
+          Let&apos;s Build Your Next AI Product
         </motion.h2>
 
-        <motion.div
-          className={styles.contactContent}
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
+        <div className={styles.contactCard}>
+          <motion.div
+            className={styles.contactContent}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
           {/* Contact Info */}
           <motion.div
             className={styles.contactInfo}
@@ -335,6 +336,7 @@ export default function ContactSection() {
             </form>
           </motion.div>
         </motion.div>
+        </div>
 
         <motion.div
           className={styles.footer}
@@ -344,7 +346,7 @@ export default function ContactSection() {
           viewport={{ once: true }}
         >
           <p className={styles.footerText}>
-            © 2025 Parth Pipaliya
+            &copy; 2025 Parth Pipaliya. Engineered for the future.
           </p>
         </motion.div>
       </div>
