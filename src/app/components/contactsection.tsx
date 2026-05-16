@@ -346,7 +346,7 @@ export default function ContactSection() {
           viewport={{ once: true }}
         >
           <p className={styles.footerText}>
-            &copy; 2025 Parth Pipaliya. Engineered for the future.
+            &copy; 2026 Parth Pipaliya. Engineered for the future.
           </p>
         </motion.div>
       </div>
