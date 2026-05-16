@@ -265,7 +265,7 @@ export default function ChatbotWidget() {
                   <span className={styles.onlineDot} />
                 </div>
                 <div>
-                  <div className>Parth AI Assistant</div>
+                  <div>Parth AI Assistant</div>
                   <div className={styles.headerStatus}>
                     {isBotResponding ? '✦ Thinking...' : 'Portfolio Consultant • Active'}
                   </div>
