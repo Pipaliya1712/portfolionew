@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { validateContact } from '@/lib/contact-validation';
 export async function POST(request: NextRequest) {
     try {
         const raw = await request.text();
@@ -17,8 +18,9 @@ export async function POST(request: NextRequest) {
         if (typeof body.website === 'string' && body.website.trim())
             return NextResponse.json({ success: true });
         const { name, email, subject, message, company = '', consent } = body;
-        if ([name, email, subject, message, company].some(value => typeof value !== 'string') || !name.trim() || name.length > 100 || email.length > 254 || !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email) || /[\r\n]/.test(email + subject + name) || !subject.trim() || subject.length > 150 || message.trim().length < 20 || message.length > 5000 || company.length > 200 || consent !== 'yes') {
-            return NextResponse.json({ error: 'Please check your details, include at least 20 characters about your project, and accept the privacy notice.' }, { status: 400 });
+        const fields = validateContact({ name, email, subject, message, company, consent });
+        if (Object.keys(fields).length) {
+            return NextResponse.json({ error: 'Please check the highlighted fields.', fields }, { status: 400 });
         }
         if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD)
             return NextResponse.json({ error: 'The enquiry form is not connected yet. Please email parthpipaliya1712@gmail.com directly.' }, { status: 503 });
