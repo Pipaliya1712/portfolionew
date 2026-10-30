@@ -1,6 +1,21 @@
-// pages/index.js
-import Portfolio from './components/portfolio';
-
+import Link from 'next/link';
+import Image from 'next/image';
+import { ArrowDown, ArrowUpRight, Check, MoveUpRight } from 'lucide-react';
+import { ArrowLink, ContactBand, ProjectCard, ServiceList } from '@/components/site-parts';
+import { articles, pageMetadata, processSteps, projects } from '@/lib/site';
+import { MotionToggle } from '@/components/appearance-controls';
+export const metadata = pageMetadata('AI Engineering & Software Consulting', 'Independent AI engineering, web development, and systems integration by Parth Pipaliya. Based in Ahmedabad, working with teams remotely.', '/');
 export default function Home() {
-  return <Portfolio />;
+    return <>
+    <section className="hero container">
+      <div className="hero-copy"><div className="eyebrow"><span />Independent expertise. Shared ambition.</div><h1>Good business.<br />Better <em>software.</em></h1><p className="hero-description">I help businesses turn complex problems into thoughtful digital products, practical AI, and systems that work together.</p><div className="hero-actions"><Link className="button" href="/contact">Let’s discuss your project <ArrowUpRight size={18}/></Link><Link className="quiet-link" href="/work">Explore the work <ArrowDown size={15}/></Link></div><div className="hero-person"><Image src="/profile.png" width={44} height={44} alt="Parth Pipaliya"/><div><b>Parth Pipaliya</b><span>Engineer by practice. Your partner in delivery.</span></div></div></div>
+      <div className="hero-art"><MotionToggle /><div className="hero-art-scene" aria-label="An architectural illustration of connected systems" role="img"><span className="art-corner">FORM / FUNCTION</span><div className="art-grid"/><div className="art-orbit orbit-one"/><div className="art-orbit orbit-two"/><div className="arch arch-back"/><div className="arch arch-front"><span className="arch-cutout"/></div><div className="art-sphere"/><div className="art-floor"/><div className="art-label"><span className="label-cross">+</span>Built on understanding.<br />Designed to move you forward.</div><span className="art-coordinate">23.0225° N / 72.5714° E</span><MoveUpRight className="art-arrow" strokeWidth={1}/></div></div>
+    </section>
+    <div className="capability-strip"><div className="container"><span>FROM THE FIRST QUESTION<br /><b>TO THE WORKING PRODUCT</b></span><span>AI engineering</span><i>✳</i><span>Web applications</span><i>✳</i><span>Systems integration</span><i>✳</i><span>Technical consulting</span></div></div>
+    <section className="section container"><div className="section-heading"><div><div className="eyebrow">01 / What I can help with</div><h2>The right technology.<br />For the actual problem.</h2></div><p>Good engineering starts with understanding your business. I bring hands-on development and a clear, practical approach to every engagement.</p></div><ServiceList compact/><div className="section-end"><span>One point of contact. From discovery through delivery.</span><ArrowLink href="/services">Explore services</ArrowLink></div></section>
+    <section className="section work-section"><div className="container"><div className="section-heading"><div><div className="eyebrow">02 / Selected work</div><h2>Complex behind the scenes.<br /><em>Clear where it matters.</em></h2></div><ArrowLink href="/work">View selected work</ArrowLink></div><div className="projects-grid">{projects.slice(0, 2).map((project, index) => <ProjectCard key={project.slug} project={project} index={index}/>)}</div></div></section>
+    <section className="section container approach-section"><div><div className="eyebrow">03 / The working relationship</div><h2>A clear process.<br />A shared view of progress.</h2><p className="body-copy">You should know what’s being built, why it matters, and what comes next. The work stays collaborative, with decisions explained in plain language.</p><ArrowLink href="/about">Meet your technical partner</ArrowLink><div className="principle-note"><Check size={17}/><span>Clear scope. Working reviews. Considered handover.</span></div></div><div className="process-list">{processSteps.map((step, index) => <div className="process-step" key={step.title}><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{step.title}</h3><p>{step.text}</p></div></div>)}</div></section>
+    <section className="section insights-preview"><div className="container"><div className="section-heading"><div><div className="eyebrow">04 / Notes from the work</div><h2>A little perspective<br />before the next decision.</h2></div><ArrowLink href="/insights">Read the insights</ArrowLink></div><div className="articles-grid">{articles.map(article => <Link href={`/insights/${article.slug}`} className="article-card" key={article.slug}><div className="article-meta"><span>{article.category}</span><span>{article.readTime}</span></div><h3>{article.title}</h3><span className="article-arrow"><ArrowUpRight size={23}/></span></Link>)}</div></div></section>
+    <ContactBand />
+  </>;
 }
