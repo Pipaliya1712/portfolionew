@@ -21,7 +21,7 @@ Open http://localhost:3000. The public pages render without credentials. Restart
 | `EMAIL_USER` | Gmail account that sends and receives project enquiries |
 | `EMAIL_PASSWORD` | Gmail App Password for that account |
 | `GROQ_API_KEY` | Enables AI assistant replies |
-| `GROQ_MODEL` | Optional model override; defaults to `llama-3.3-70b-versatile` |
+| `GROQ_MODEL` | Optional model override; defaults to `openai/gpt-oss-120b` |
 
 Never put secrets in a `NEXT_PUBLIC_` variable or commit `.env.local`. Supabase is no longer required. New conversations stay in browser memory and are sent to Groq only when AI is configured. No database persistence endpoints remain. Existing remote database data is not modified.
 
