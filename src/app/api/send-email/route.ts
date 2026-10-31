@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { validateContact } from '@/lib/contact-validation';
+export const runtime = 'nodejs';
 export async function POST(request: NextRequest) {
     try {
         const raw = await request.text();
@@ -22,13 +23,25 @@ export async function POST(request: NextRequest) {
         if (Object.keys(fields).length) {
             return NextResponse.json({ error: 'Please check the highlighted fields.', fields }, { status: 400 });
         }
-        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD)
-            return NextResponse.json({ error: 'The enquiry form is not connected yet. Please email parthpipaliya1712@gmail.com directly.' }, { status: 503 });
+        if (!process.env.EMAIL_USER?.trim() || !process.env.EMAIL_PASSWORD?.trim()) {
+            console.error('[contact] Email configuration missing', {
+                EMAIL_USER: Boolean(process.env.EMAIL_USER?.trim()),
+                EMAIL_PASSWORD: Boolean(process.env.EMAIL_PASSWORD?.trim()),
+            });
+            return NextResponse.json({ error: 'The enquiry form is not connected yet. Please email parthpipaliya1712@gmail.com directly.', code: 'EMAIL_NOT_CONFIGURED' }, { status: 503 });
+        }
         const transporter = nodemailer.createTransport({ service: 'gmail', auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASSWORD }, connectionTimeout: 10000, socketTimeout: 15000 });
         await transporter.sendMail({ from: { name: 'Parth Pipaliya — Website', address: process.env.EMAIL_USER }, to: process.env.EMAIL_USER, replyTo: { name: name.trim(), address: email.trim() }, subject: `Project enquiry: ${subject.trim()}`, text: `Name: ${name.trim()}\nEmail: ${email.trim()}\nCompany / website: ${company.trim() || 'Not supplied'}\nService: ${subject.trim()}\nContact consent: Yes\n\n${message.trim()}` });
         return NextResponse.json({ success: true });
     }
-    catch {
-        return NextResponse.json({ error: 'Your enquiry could not be sent. Please email parthpipaliya1712@gmail.com directly.' }, { status: 503 });
+    catch (error) {
+        const failure = error as { code?: unknown; responseCode?: unknown };
+        const reason = typeof failure?.code === 'string' && /^[A-Z_]{1,40}$/.test(failure.code) ? failure.code : 'UNKNOWN';
+        const smtpStatus = typeof failure?.responseCode === 'number' && Number.isInteger(failure.responseCode) && failure.responseCode >= 100 && failure.responseCode <= 599 ? failure.responseCode : undefined;
+        console.error('[contact] Email delivery failed', { reason, smtpStatus });
+        const code = reason === 'EAUTH' ? 'EMAIL_AUTH_FAILED'
+            : ['ECONNECTION', 'ESOCKET', 'ETIMEDOUT', 'EDNS'].includes(reason) ? 'EMAIL_CONNECTION_FAILED'
+            : 'EMAIL_SEND_FAILED';
+        return NextResponse.json({ error: 'Your enquiry could not be sent. Please email parthpipaliya1712@gmail.com directly.', code }, { status: 503 });
     }
 }
